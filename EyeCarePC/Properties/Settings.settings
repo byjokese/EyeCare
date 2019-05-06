@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EyeCarePC.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="disabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="shortBreaks" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:40:00</Value>
+    </Setting>
+    <Setting Name="disableOnFullScreen" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="forceNoClose" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="longBreaks" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">01:30:00</Value>
+    </Setting>
+    <Setting Name="shortBreakDuration" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:00:20</Value>
+    </Setting>
+    <Setting Name="longBreakDuration" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:03:00</Value>
+    </Setting>
+    <Setting Name="audios" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="runStartUp" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,83 @@
+﻿<Window x:Class="EyeCarePC.EyeCareShortWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EyeCarePC"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded" Title="EyeCareShortWindow" Height="450" Width="700" WindowStyle="None" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" UseLayoutRounding="False" AllowsTransparency="True" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" BorderBrush="Black" BorderThickness="5" Closing="Window_Closing" ShowInTaskbar="False">
+	<Window.Effect>
+		<DropShadowEffect/>
+	</Window.Effect>
+	<Window.Background>
+		<SolidColorBrush Opacity="0.5" Color="Black"/>
+	</Window.Background>
+	<Window.Resources>
+		<Style TargetType="{x:Type Button}">
+			<Setter Property="Background" Value="DarkGray" />
+			<Setter Property="Foreground" Value="Black" />
+			<Setter Property="FontSize" Value="15" />
+			<Setter Property="SnapsToDevicePixels" Value="True" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border CornerRadius="20" Background="DarkGray"  BorderThickness="2" >
+							<ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+							<Border.Style>
+								<Style>
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}}" Value="False"></DataTrigger>
+										<Trigger Property="Button.IsMouseOver" Value="True">
+											<Setter Property="Button.Background" Value="LightGray"/>
+										</Trigger>
+									</Style.Triggers>
+								</Style>
+							</Border.Style>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Background" Value="LightGray"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+	</Window.Resources>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="10"/>
+			<ColumnDefinition Width="40"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="40"/>
+			<ColumnDefinition Width="20"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="10"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="65"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="60"/>
+			<RowDefinition Height="20"/>
+		</Grid.RowDefinitions>
+		<Button x:Name="CloseBtn" Grid.Column="3" Grid.Row="1" Height="40" Width="40" VerticalAlignment="Top" Click="CloseButton_Click">X</Button>
+		<Label x:Name="TimeLeft" Grid.Column="2" Grid.Row="2" Foreground="White" FontSize="48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0">
+			<Label.Effect>
+				<DropShadowEffect Color="#FFB8B8B8" BlurRadius="20" Direction="180" ShadowDepth="1"/>
+			</Label.Effect>
+		</Label>
+		<Grid Grid.Column="2" Grid.Row="3" x:Name="LongBreakImage" Panel.ZIndex="3">
+			<Image Source="Resources/clock.png" Width="140" Stretch="None"/>
+		</Grid>
+		<Canvas x:Name="EyeCanvas" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<Ellipse x:Name="LeftEye" Fill="White" Height="115" Width="100" Stroke="Black" Panel.ZIndex="1"/>
+			<Ellipse x:Name="LeftPupil" Fill="Black" Height="55" Width="55" Stroke="Black" Panel.ZIndex="2"/>
+			<Ellipse x:Name="RightEye" Fill="White" Height="115" Width="100" Stroke="Black" Panel.ZIndex="1"/>
+			<Ellipse x:Name="RightPupil" Fill="Black" Height="55" Width="55" Stroke="Black" Panel.ZIndex="2"/>
+		</Canvas>
+		<Label  Grid.Row="4" Grid.Column="2" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<TextBlock x:Name="description" TextAlignment="Center"  TextWrapping="Wrap" HorizontalAlignment="Center">
+			</TextBlock>
+		</Label>
+	</Grid>
+</Window>

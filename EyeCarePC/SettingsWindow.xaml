@@ -1,0 +1,112 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EyeCarePC"
+        xmlns:Properties="clr-namespace:EyeCarePC.Properties" x:Class="EyeCarePC.SettingsWindow"
+        mc:Ignorable="d"
+        Title="EyeCare Settings" Width="735.671" MinHeight="450" MinWidth="735.671" ResizeMode="CanMinimize" Icon="favicon.ico" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Height="345.107">
+	<Window.Resources>
+		<Style TargetType="{x:Type Label}">
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontSize" Value="20"/>
+		</Style>
+		<Style TargetType="{x:Type CheckBox}">
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontSize" Value="15"/>
+			<Setter Property="Margin" Value="15,0,0,0"/>
+		</Style>
+		<Style TargetType="{x:Type TextBox}">
+			<Setter Property="Height" Value="20"/>
+			<Setter Property="Width" Value="50"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+		</Style>
+	</Window.Resources>
+	<Grid Loaded="Grid_Loaded" Background="#252526">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="20"/>
+			<RowDefinition Height="60"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="30"/>
+			<RowDefinition Height="20"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="20"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="60"/>
+			<ColumnDefinition Width="20"/>
+		</Grid.ColumnDefinitions>
+		<Label FontSize="35" Grid.Row="1" Grid.Column="1" Content="Eye Care Settings"/>
+		<Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="3" Margin="0,0,20,0" Click="RestoreButton_Click" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" UseLayoutRounding="False">Restore Defaults</Button>
+		<Image Grid.Row="1" Grid.Column="2" Source="favicon.ico"/>
+		<StackPanel Grid.Row="2" Grid.Column="1" Margin="10">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<StackPanel Grid.Column="0">
+					<CheckBox x:Name="generalDisable" Content="Disable"/>
+					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Disable all breaks until unchecked again."/>
+					<CheckBox x:Name="fullscreenDisable" Content="Disable while Full Screen"/>
+					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Disable while using fullscreen apps or games."/>
+					<CheckBox x:Name="forceBreaks" Content="Force Breaks"/>
+					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Disable closing or dismissing the break."/>
+				</StackPanel>
+				<StackPanel Grid.Column="1">
+					<CheckBox x:Name="playAudios" Content="Use Audios"/>
+					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Use audios for notifications and break guides."/>
+					<CheckBox x:Name="RunAtStart" Content="Run at Start"/>
+					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Run EyeCare on system Start."/>
+				</StackPanel>
+			</Grid>
+			<Grid Margin="20,0,0,0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"/>
+				</Grid.RowDefinitions>
+				<Label FontSize="15" Grid.Column="0" Grid.Row="0" Content="Short break every:"/>
+				<Label FontSize="15" Grid.Column="0" Grid.Row="1" Content="Long break every:"/>
+				<DockPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left">
+					<TextBox x:Name="ShortHours"/>
+					<Label FontSize="15" Content=":"/>
+					<TextBox x:Name="ShortMinutes"/>
+					<Label FontSize="15" Content=":"/>
+					<TextBox x:Name="ShortSeconds"/>
+					<Label FontSize="15" VerticalAlignment="Center" Content="for"/>
+					<TextBox x:Name="ShortDuration"/>
+					<ComboBox x:Name="ShortDurationUnits" Width="80" VerticalAlignment="Center" Margin="10,0,0,0">
+						<ComboBoxItem IsSelected="True" Content="Seconds"/>
+						<ComboBoxItem Content="Minutes"/>
+					</ComboBox>
+				</DockPanel>
+				<DockPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+					<TextBox x:Name="LongHours"/>
+					<Label FontSize="15" Content=":"/>
+					<TextBox x:Name="LongMinutes"/>
+					<Label FontSize="15" Content=":"/>
+					<TextBox x:Name="LongSeconds"/>
+					<Label FontSize="15" VerticalAlignment="Center" Content="for"/>
+					<TextBox x:Name="LongDuration">
+						<TextBox.DataContext>
+							<Properties:Settings/>
+						</TextBox.DataContext>
+					</TextBox>
+					<ComboBox x:Name="LongDurationUnits" Width="80" VerticalAlignment="Center" Margin="10,0,0,0">
+						<ComboBoxItem Content="Seconds"/>
+						<ComboBoxItem IsSelected="True" Content="Minutes"/>
+						<ComboBoxItem Content="Hours"/>
+					</ComboBox>
+				</DockPanel>
+			</Grid>
+			<Label FontSize="13" FontStyle="Italic" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center" HorizontalAlignment="Center">More info at https://github.com/byjokese/EyeCare</Label>
+			<Label x:Name="InputError" FontSize="13" Foreground="Red"></Label>
+		</StackPanel>
+		<Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="30" Click="SaveButton_Click">Save</Button>
+	</Grid>
+</Window>
