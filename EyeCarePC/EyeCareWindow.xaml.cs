@@ -1,29 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Media;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using Application = System.Windows.Application;
 
 namespace EyeCarePC {
 	/// <summary>
 	/// Interaction logic for EyeCareShortWindow.xaml
 	/// </summary>
-	
-	public partial class EyeCareShortWindow : Window {
+
+	public partial class EyeCareWindow : Window {
 		private enum Movement { LEFT, RIGHT, UP, DOWN, CENTER };
 		private Movement LastMove { get; set; }
 		private int MovementCount { get; set; }
@@ -35,12 +25,12 @@ namespace EyeCarePC {
 		private App.BreakType Breaktype { get; set; }
 		private bool IsMuted { get; set; }
 
-		public EyeCareShortWindow(App.BreakType breakType, bool mute) {
+		public EyeCareWindow(App.BreakType breakType, bool mute) {
 			InitializeComponent();
 			Breaktype = breakType;
 			IsMuted = mute;
 			CloseBtn.Visibility = (Properties.Settings.Default.forceNoClose) ? Visibility.Hidden : Visibility.Visible;
-			if(Properties.Settings.Default.forceNoClose){
+			if (Properties.Settings.Default.forceNoClose) {
 				EyeWindow.Width = Screen.AllScreens[0].WorkingArea.Width;
 				EyeWindow.Height = Screen.AllScreens[0].WorkingArea.Height;
 			}
@@ -58,7 +48,7 @@ namespace EyeCarePC {
 						soundUpDown.Load();
 						soundEnd.Load();
 					}
-				break;
+					break;
 				case App.BreakType.LONG:
 					EyeCanvas.Visibility = Visibility.Collapsed;
 					//Get Break Duration
@@ -95,19 +85,18 @@ namespace EyeCarePC {
 						soundEnd.Play();
 					dt.Stop();
 					this.Close();
-				}	
-				else
+				} else
 					ts(count);
 			};
 			ts(count);
-			dt.Start();		
+			dt.Start();
 		}
 
 		private void StartAnimation() {
 			Dispatcher.Invoke(() => {
 				CenterEyes();
 				switch (Breaktype) {
-					case App.BreakType.SHORT:				
+					case App.BreakType.SHORT:
 						description.Text = "Move your eyes Left to Right";
 						LastMove = Movement.LEFT;
 						if (soundLeftRight != null)
@@ -119,8 +108,8 @@ namespace EyeCarePC {
 						description.Text = "Get up and relax for the rest of the break. Look out the window or take a small walk.";
 						Countdown((int)CountDown.TotalSeconds, TimeSpan.FromSeconds(1), cur => TimeLeft.Content = cur.ToString());
 						break;
-				};			
-			});		
+				};
+			});
 		}
 		private void CenterEyes() {
 			Dispatcher.Invoke(() => {
@@ -228,11 +217,11 @@ namespace EyeCarePC {
 
 		private void MoveCompleted(object sender, EventArgs e) {
 			Dispatcher.Invoke(() => {
-				if((string)TimeLeft.Content == "0") {
+				if ((string)TimeLeft.Content == "0") {
 					return;
 				}
-				if(MovementCount == 9) {
-					if(soundUpDown != null)
+				if (MovementCount == 9) {
+					if (soundUpDown != null)
 						soundUpDown.Play();
 					MoveEyesFromLeftToCenter();
 					LastMove = Movement.CENTER;
@@ -245,7 +234,7 @@ namespace EyeCarePC {
 						MoveEyesLeft();
 						LastMove = Movement.LEFT;
 					} else if (LastMove == Movement.CENTER) {
-						MoveEyesUpFromCenter();			
+						MoveEyesUpFromCenter();
 						LastMove = Movement.UP;
 					} else if (LastMove == Movement.UP) {
 						MoveEyesDown();
@@ -254,7 +243,7 @@ namespace EyeCarePC {
 						MoveEyesUp();
 						LastMove = Movement.UP;
 					}
-				}				
+				}
 				MovementCount++;
 			});
 		}

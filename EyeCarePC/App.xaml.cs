@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.Media;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Controls;
-using System.Threading;
-using Application = System.Windows.Application;
 using System.Windows.Threading;
+using System.Xml;
+using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Forms.ContextMenu;
 using MenuItem = System.Windows.Forms.MenuItem;
-using System.Runtime.InteropServices;
-using System.Drawing;
-using System.Windows.Media;
-using System.Media;
 
 namespace EyeCarePC {
 	/// <summary>
@@ -44,10 +37,12 @@ namespace EyeCarePC {
 		private IntPtr desktopHandle;
 		private IntPtr shellHandle;
 
+		private const String APP_ID = "By-Jokese.EyeCare";
+
 		public NotifyIcon notifyIcon;
 		private SettingsWindow settingsWindow;
-		private EyeCareShortWindow eyeCareShortWindow;
-		private List<EyeCareShortWindow> eyeCareWindows;
+		private EyeCareWindow eyeCareWindow;
+		private List<EyeCareWindow> eyeCareWindows;
 		private DispatcherTimer shortEyeCareWindowTimmer;
 		private DispatcherTimer longEyeCareWindowTimmer;
 		private SoundPlayer soundPlayer;
@@ -57,9 +52,9 @@ namespace EyeCarePC {
 			desktopHandle = GetDesktopWindow();
 			shellHandle = GetShellWindow();
 
-			eyeCareWindows = new List<EyeCareShortWindow>();
+			eyeCareWindows = new List<EyeCareWindow>();
 			settingsWindow = new SettingsWindow();
-			eyeCareShortWindow = new EyeCareShortWindow(BreakType.LONG, true);
+			eyeCareWindow = new EyeCareWindow(BreakType.LONG, true);
 			soundPlayer = new SoundPlayer();
 
 			#region NotifyIcon Setup
@@ -74,7 +69,7 @@ namespace EyeCarePC {
 			notifyIcon.MouseDown +=
 				delegate (object sender, MouseEventArgs args) {
 					notifyIcon.ContextMenu.MenuItems[0].Checked = EyeCarePC.Properties.Settings.Default.disabled;
-			};
+				};
 			ContextMenu contextMenu = new ContextMenu();
 			MenuItem menuItem1 = new MenuItem {
 				Text = "&Open Settings"
@@ -97,9 +92,9 @@ namespace EyeCarePC {
 			#region Timmers Setup
 			//Short Brake
 			shortEyeCareWindowTimmer = new DispatcherTimer();
-			shortEyeCareWindowTimmer.Interval = new TimeSpan(0, 0, 30); //TODO change on realese
+			shortEyeCareWindowTimmer.Interval = EyeCarePC.Properties.Settings.Default.shortBreaksInterval;//new TimeSpan(0, 0, 30);
 			shortEyeCareWindowTimmer.Tick += (_, a) => {
-				if(!(EyeCarePC.Properties.Settings.Default.disabled || IsUserOnFullScreenMode() || IsEyeCareAlreadyOpen())) {
+				if (!(EyeCarePC.Properties.Settings.Default.disabled || IsUserOnFullScreenMode() || IsEyeCareAlreadyOpen())) {
 					PrepareAndShowWindows(BreakType.SHORT);
 				} else {
 					//Toast notification??
@@ -107,13 +102,13 @@ namespace EyeCarePC {
 			};
 			//Long Brake
 			longEyeCareWindowTimmer = new DispatcherTimer();
-			longEyeCareWindowTimmer.Interval = new TimeSpan(0,1,0);  //TODO change on realese
+			longEyeCareWindowTimmer.Interval = EyeCarePC.Properties.Settings.Default.longBreaksInterval;//new TimeSpan(0, 1, 0);
 			longEyeCareWindowTimmer.Tick += (_, a) => {
 				if (!(EyeCarePC.Properties.Settings.Default.disabled || IsUserOnFullScreenMode() || IsEyeCareAlreadyOpen())) {
 					if (EyeCarePC.Properties.Settings.Default.audios) {
 						PrepareAndShowWindows(BreakType.LONG);
 					}
-					eyeCareShortWindow.Show();
+					eyeCareWindow.Show();
 				} else {
 					//Toast notification??
 				}
@@ -127,24 +122,24 @@ namespace EyeCarePC {
 		private void PrepareAndShowWindows(BreakType breakType) {
 			//Clear previous Windows
 			eyeCareWindows.Clear();
-			foreach (Screen screen in Screen.AllScreens ){
+			foreach (Screen screen in Screen.AllScreens) {
 				//Play audios only on Primary Window to avoid audio repetition
-				if(screen.Primary){
-					eyeCareShortWindow = new EyeCareShortWindow(breakType, false);//Primary Window does not get muted
-					eyeCareShortWindow.WindowStartupLocation = WindowStartupLocation.Manual;
-					eyeCareShortWindow.Left = screen.WorkingArea.Left + (screen.Bounds.Width/2) - (eyeCareShortWindow.Width/2);
-					eyeCareShortWindow.Top = screen.WorkingArea.Top + (screen.Bounds.Height / 2) - (eyeCareShortWindow.Height/2);
-					eyeCareShortWindow.WindowState = WindowState.Normal;
-					eyeCareWindows.Add(eyeCareShortWindow);
-					eyeCareShortWindow.Show();
+				if (screen.Primary) {
+					eyeCareWindow = new EyeCareWindow(breakType, false);//Primary Window does not get muted
+					eyeCareWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+					eyeCareWindow.Left = screen.WorkingArea.Left + (screen.Bounds.Width / 2) - (eyeCareWindow.Width / 2);
+					eyeCareWindow.Top = screen.WorkingArea.Top + (screen.Bounds.Height / 2) - (eyeCareWindow.Height / 2);
+					eyeCareWindow.WindowState = WindowState.Normal;
+					eyeCareWindows.Add(eyeCareWindow);
+					eyeCareWindow.Show();
 					if (EyeCarePC.Properties.Settings.Default.audios) {
 						PlayStartAudio(BreakType.SHORT);
-					}	
+					}
 					//With Multimonitor disabed, skip the rest of the screens
-					if(!EyeCarePC.Properties.Settings.Default.showOnAllMonitors)
-						break;			
-				} else{
-					EyeCareShortWindow otherEyeCare = new EyeCareShortWindow(breakType, true);//Mute all other windows
+					if (!EyeCarePC.Properties.Settings.Default.showOnAllMonitors)
+						break;
+				} else {
+					EyeCareWindow otherEyeCare = new EyeCareWindow(breakType, true);//Mute all other windows
 					otherEyeCare.WindowStartupLocation = WindowStartupLocation.Manual;
 					otherEyeCare.Show();
 					otherEyeCare.Left = screen.WorkingArea.Left + (screen.Bounds.Width / 2) - (otherEyeCare.Width / 2);
@@ -175,23 +170,23 @@ namespace EyeCarePC {
 			return runningFullScreen;
 		}
 		private bool IsEyeCareAlreadyOpen() {
-			if (eyeCareShortWindow == null)
+			if (eyeCareWindow == null)
 				return false;
-			return (eyeCareShortWindow.IsActive) ? true : false;
+			return (eyeCareWindow.IsActive) ? true : false;
 		}
 		private void PlayStartAudio(BreakType breakType) {
 			switch (breakType) {
 				case BreakType.SHORT:
 					soundPlayer.Stream = EyeCarePC.Properties.Resources.eyes_start;
-				break;
+					break;
 				case BreakType.LONG:
 					soundPlayer.Stream = EyeCarePC.Properties.Resources.eyes_start_long; //TODO Change audio to long break
-				break;
+					break;
 			}
 			soundPlayer.Load();
 			if (soundPlayer.IsLoadCompleted) {
 				soundPlayer.Play();
-			}		
+			}
 		}
 
 		private void DisableMenu_Clicked(object sender, EventArgs e) {
@@ -206,6 +201,6 @@ namespace EyeCarePC {
 		}
 		private void MenuItemClose_Clicked(object sender, EventArgs e) {
 			System.Environment.Exit(0);
-		}		
+		}
 	}
 }

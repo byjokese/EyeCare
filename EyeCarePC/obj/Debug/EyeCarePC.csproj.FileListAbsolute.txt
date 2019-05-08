@@ -18,13 +18,11 @@ D:\1_Dev\Github\Frontside Gaming\EyeCarePC\obj\Debug\EyeCareShortWindow.baml
 D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\EyeCarePC.exe.config
 D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\EyeCarePC.exe
 D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\EyeCarePC.pdb
-D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCareShortWindow.g.cs
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\SettingsWindow.g.cs
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\App.g.cs
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC_MarkupCompile.cache
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC_MarkupCompile.lref
-D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCareShortWindow.baml
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\SettingsWindow.baml
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.g.resources
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.Properties.Resources.resources
@@ -32,7 +30,6 @@ D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.csproj.GenerateResource.ca
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.csproj.CoreCompileInputs.cache
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.exe
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.pdb
-D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.csprojAssemblyReference.cache
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.TrustInfo.xml
 D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\EyeCarePC.exe.manifest
 D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\EyeCarePC.application
@@ -40,3 +37,11 @@ D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.exe.manifest
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.application
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\Interop.IWshRuntimeLibrary.dll
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.csproj.ResolveComReference.cache
+D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCareWindow.g.cs
+D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCareWindow.baml
+D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.csprojAssemblyReference.cache
+D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\Microsoft.WindowsAPICodePack.dll
+D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\Microsoft.WindowsAPICodePack.xml
+D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml
+D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.csproj.CopyComplete

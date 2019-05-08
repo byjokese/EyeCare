@@ -38,12 +38,12 @@ namespace EyeCarePC.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:40:00")]
-        public global::System.TimeSpan shortBreaks {
+        public global::System.TimeSpan shortBreaksInterval {
             get {
-                return ((global::System.TimeSpan)(this["shortBreaks"]));
+                return ((global::System.TimeSpan)(this["shortBreaksInterval"]));
             }
             set {
-                this["shortBreaks"] = value;
+                this["shortBreaksInterval"] = value;
             }
         }
         
@@ -74,12 +74,12 @@ namespace EyeCarePC.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("01:30:00")]
-        public global::System.TimeSpan longBreaks {
+        public global::System.TimeSpan longBreaksInterval {
             get {
-                return ((global::System.TimeSpan)(this["longBreaks"]));
+                return ((global::System.TimeSpan)(this["longBreaksInterval"]));
             }
             set {
-                this["longBreaks"] = value;
+                this["longBreaksInterval"] = value;
             }
         }
         

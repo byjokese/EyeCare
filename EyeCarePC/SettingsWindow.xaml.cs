@@ -1,5 +1,4 @@
-﻿using IWshRuntimeLibrary;
-using System;
+﻿using System;
 using System.IO;
 using System.Windows;
 using File = System.IO.File;
@@ -20,19 +19,19 @@ namespace EyeCarePC {
 			RunAtStart.IsChecked = Properties.Settings.Default.runStartUp;
 			MultiMonitor.IsChecked = Properties.Settings.Default.showOnAllMonitors;
 
-			ShortHours.Text = Properties.Settings.Default.shortBreaks.Hours.ToString();
-			ShortMinutes.Text = Properties.Settings.Default.shortBreaks.Minutes.ToString();
-			ShortSeconds.Text = Properties.Settings.Default.shortBreaks.Seconds.ToString();
-			if(Properties.Settings.Default.shortBreakDuration.Seconds != 00) {
+			ShortHours.Text = Properties.Settings.Default.shortBreaksInterval.Hours.ToString();
+			ShortMinutes.Text = Properties.Settings.Default.shortBreaksInterval.Minutes.ToString();
+			ShortSeconds.Text = Properties.Settings.Default.shortBreaksInterval.Seconds.ToString();
+			if (Properties.Settings.Default.shortBreakDuration.Seconds != 00) {
 				ShortDuration.Text = Properties.Settings.Default.shortBreakDuration.Seconds.ToString();
 				ShortDurationUnits.SelectedIndex = 0;
 			} else if (Properties.Settings.Default.shortBreakDuration.Minutes != 00) {
 				ShortDuration.Text = Properties.Settings.Default.shortBreakDuration.Minutes.ToString();
 				ShortDurationUnits.SelectedIndex = 1;
 			}
-			LongHours.Text = Properties.Settings.Default.longBreaks.Hours.ToString();
-			LongMinutes.Text = Properties.Settings.Default.longBreaks.Minutes.ToString();
-			LongSeconds.Text = Properties.Settings.Default.longBreaks.Seconds.ToString();
+			LongHours.Text = Properties.Settings.Default.longBreaksInterval.Hours.ToString();
+			LongMinutes.Text = Properties.Settings.Default.longBreaksInterval.Minutes.ToString();
+			LongSeconds.Text = Properties.Settings.Default.longBreaksInterval.Seconds.ToString();
 			if (Properties.Settings.Default.longBreakDuration.Seconds != 00) {
 				LongDuration.Text = Properties.Settings.Default.longBreakDuration.Seconds.ToString();
 				LongDurationUnits.SelectedIndex = 0;
@@ -80,9 +79,9 @@ namespace EyeCarePC {
 				ShortSeconds.Focus();
 				return;
 			}
-			Properties.Settings.Default.shortBreaks = new TimeSpan(shortHours, shortMinutes, shortSeconds);
+			Properties.Settings.Default.shortBreaksInterval = new TimeSpan(shortHours, shortMinutes, shortSeconds);
 			//Short Duration
-			TimeSpan shortDurationSpan = new TimeSpan(0,0,20); //Default Vale in case of error.
+			TimeSpan shortDurationSpan = new TimeSpan(0, 0, 20); //Default Vale in case of error.
 			Int32 shortDurationInt;
 			if (!Int32.TryParse(ShortDuration.Text, out shortDurationInt)) {
 				InputError.Content = "Check Sort break Duration, must be a valid number";
@@ -90,11 +89,11 @@ namespace EyeCarePC {
 			}
 			switch (ShortDurationUnits.SelectedIndex) {
 				case 0:
-					shortDurationSpan = new TimeSpan(0,0, shortDurationInt);
-				break;
+					shortDurationSpan = new TimeSpan(0, 0, shortDurationInt);
+					break;
 				case 1:
 					shortDurationSpan = new TimeSpan(0, shortDurationInt, 0);
-				break;
+					break;
 			}
 			Properties.Settings.Default.shortBreakDuration = shortDurationSpan;
 			//Long break interval
@@ -114,7 +113,7 @@ namespace EyeCarePC {
 				LongSeconds.Focus();
 				return;
 			}
-			Properties.Settings.Default.longBreaks = new TimeSpan(longHours, longMinutes, longSeconds);
+			Properties.Settings.Default.longBreaksInterval = new TimeSpan(longHours, longMinutes, longSeconds);
 			//Long Duration
 			TimeSpan longDurationSpan = new TimeSpan(0, 3, 0); //Default Vale in case of error.
 			Int32 longDurationInt;
@@ -125,13 +124,13 @@ namespace EyeCarePC {
 			switch (LongDurationUnits.SelectedIndex) {
 				case 0:
 					longDurationSpan = new TimeSpan(0, 0, longDurationInt);
-				break;
+					break;
 				case 1:
 					longDurationSpan = new TimeSpan(0, longDurationInt, 0);
-				break;
+					break;
 				case 2:
 					longDurationSpan = new TimeSpan(longDurationInt, 0, 0);
-				break;
+					break;
 			}
 			Properties.Settings.Default.longBreakDuration = longDurationSpan;
 			//Save All Settings
@@ -140,7 +139,7 @@ namespace EyeCarePC {
 
 		private void RestoreButton_Click(object sender, RoutedEventArgs e) {
 			InputError.Content = "";//Clear previous Error Messeges
-			//Set the UI to default values
+									//Set the UI to default values
 			GeneralDisable.IsChecked = false;
 			FullscreenDisable.IsChecked = true;
 			ForceBreaks.IsChecked = false;
@@ -157,12 +156,12 @@ namespace EyeCarePC {
 			LongSeconds.Text = "0";
 			LongDuration.Text = "3";
 			LongDurationUnits.SelectedIndex = 1;
-			
+
 			Properties.Settings.Default.Reset(); //Reset Settings											 
 			Properties.Settings.Default.Save(); //Save All Settings
 		}
 
-		private void SetupRunAtStartUp(){
+		private void SetupRunAtStartUp() {
 			//create shortcut to file in startup
 			IWshRuntimeLibrary.WshShell wsh = new IWshRuntimeLibrary.WshShell();
 			IWshRuntimeLibrary.IWshShortcut shortcut = wsh.CreateShortcut(
@@ -176,9 +175,9 @@ namespace EyeCarePC {
 			shortcut.Save();
 		}
 
-		private void RemoveRunAtStartUp(){
+		private void RemoveRunAtStartUp() {
 			var startUpFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-			if (File.Exists(Path.Combine(startUpFolder, @"\EyeCare.lnk"))){
+			if (File.Exists(Path.Combine(startUpFolder, @"\EyeCare.lnk"))) {
 				File.Delete(Path.Combine(startUpFolder, @"\EyeCare.lnk"));
 			}
 		}

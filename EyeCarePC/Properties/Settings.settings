@@ -5,7 +5,7 @@
     <Setting Name="disabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="shortBreaks" Type="System.TimeSpan" Scope="User">
+    <Setting Name="shortBreaksInterval" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:40:00</Value>
     </Setting>
     <Setting Name="disableOnFullScreen" Type="System.Boolean" Scope="User">
@@ -14,7 +14,7 @@
     <Setting Name="forceNoClose" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="longBreaks" Type="System.TimeSpan" Scope="User">
+    <Setting Name="longBreaksInterval" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">01:30:00</Value>
     </Setting>
     <Setting Name="shortBreakDuration" Type="System.TimeSpan" Scope="User">
