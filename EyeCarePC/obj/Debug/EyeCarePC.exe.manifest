@@ -43,24 +43,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EyeCarePC.exe" size="2628528">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EyeCarePC.exe" size="2733488">
       <assemblyIdentity name="EyeCarePC" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ZUd0Cxmt3EgGQqmJqh9MSsykTEpPzm/1qI+C9JT+5RQ=</dsig:DigestValue>
+        <dsig:DigestValue>RJFswOacu1l6XaRlcR1n/TqvwWCPX5lk4cDjbRNUGpg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="EyeCarePC.exe.config" size="1826">
+  <file name="EyeCarePC.exe.config" size="2080">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>8+t4KFPRo6Ps05jsH/eBZ7By4voKdGsJo0/6ytU6E+g=</dsig:DigestValue>
+      <dsig:DigestValue>SXazn4D8qzPumJ4L456r00qYfSku1t4+I+9goD5hveI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="favicon.ico" size="99678">

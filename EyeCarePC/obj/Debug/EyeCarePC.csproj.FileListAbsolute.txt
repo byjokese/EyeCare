@@ -38,3 +38,5 @@ D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\EyeCarePC.exe.manifest
 D:\1_Dev\Github\EyeCare\EyeCarePC\bin\Debug\EyeCarePC.application
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.exe.manifest
 D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.application
+D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\Interop.IWshRuntimeLibrary.dll
+D:\1_Dev\Github\EyeCare\EyeCarePC\obj\Debug\EyeCarePC.csproj.ResolveComReference.cache

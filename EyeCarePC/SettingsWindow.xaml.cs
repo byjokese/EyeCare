@@ -1,5 +1,8 @@
-﻿using System;
+﻿using IWshRuntimeLibrary;
+using System;
+using System.IO;
 using System.Windows;
+using File = System.IO.File;
 
 namespace EyeCarePC {
 	/// <summary>
@@ -10,11 +13,12 @@ namespace EyeCarePC {
 			InitializeComponent();
 			//Import Settings
 			Properties.Settings.Default.Reload();
-			generalDisable.IsChecked = Properties.Settings.Default.disabled;
-			fullscreenDisable.IsChecked = Properties.Settings.Default.disableOnFullScreen;
-			forceBreaks.IsChecked = Properties.Settings.Default.forceNoClose;
-			playAudios.IsChecked = Properties.Settings.Default.audios;
+			GeneralDisable.IsChecked = Properties.Settings.Default.disabled;
+			FullscreenDisable.IsChecked = Properties.Settings.Default.disableOnFullScreen;
+			ForceBreaks.IsChecked = Properties.Settings.Default.forceNoClose;
+			PlayAudios.IsChecked = Properties.Settings.Default.audios;
 			RunAtStart.IsChecked = Properties.Settings.Default.runStartUp;
+			MultiMonitor.IsChecked = Properties.Settings.Default.showOnAllMonitors;
 
 			ShortHours.Text = Properties.Settings.Default.shortBreaks.Hours.ToString();
 			ShortMinutes.Text = Properties.Settings.Default.shortBreaks.Minutes.ToString();
@@ -48,11 +52,17 @@ namespace EyeCarePC {
 
 		private void SaveButton_Click(object sender, RoutedEventArgs e) {
 			InputError.Content = "";//Clear previous Error Messeges
-			Properties.Settings.Default.disabled = (bool)generalDisable.IsChecked;
-			Properties.Settings.Default.disableOnFullScreen = (bool)fullscreenDisable.IsChecked;
-			Properties.Settings.Default.forceNoClose = (bool)forceBreaks.IsChecked;
-			Properties.Settings.Default.audios = (bool)playAudios.IsChecked;
+			Properties.Settings.Default.disabled = (bool)GeneralDisable.IsChecked;
+			Properties.Settings.Default.disableOnFullScreen = (bool)FullscreenDisable.IsChecked;
+			Properties.Settings.Default.forceNoClose = (bool)ForceBreaks.IsChecked;
+			Properties.Settings.Default.audios = (bool)PlayAudios.IsChecked;
 			Properties.Settings.Default.runStartUp = (bool)RunAtStart.IsChecked;
+			Properties.Settings.Default.showOnAllMonitors = (bool)MultiMonitor.IsChecked;
+			//Update Run on Start preference
+			if ((bool)RunAtStart.IsChecked)
+				SetupRunAtStartUp();
+			else
+				RemoveRunAtStartUp();
 			//Short break interval
 			Int32 shortHours, shortMinutes, shortSeconds;
 			if (!Int32.TryParse(ShortHours.Text, out shortHours)) {
@@ -130,12 +140,13 @@ namespace EyeCarePC {
 
 		private void RestoreButton_Click(object sender, RoutedEventArgs e) {
 			InputError.Content = "";//Clear previous Error Messeges
-			//Set the form to default values
-			generalDisable.IsChecked = false;
-			fullscreenDisable.IsChecked = true;
-			forceBreaks.IsChecked = false;
-			playAudios.IsChecked = false;
+			//Set the UI to default values
+			GeneralDisable.IsChecked = false;
+			FullscreenDisable.IsChecked = true;
+			ForceBreaks.IsChecked = false;
+			PlayAudios.IsChecked = false;
 			RunAtStart.IsChecked = false;
+			MultiMonitor.IsChecked = true;
 			ShortHours.Text = "0";
 			ShortMinutes.Text = "40";
 			ShortSeconds.Text = "0";
@@ -151,18 +162,25 @@ namespace EyeCarePC {
 			Properties.Settings.Default.Save(); //Save All Settings
 		}
 
-		private void setupRunAtStartUp(){
-
+		private void SetupRunAtStartUp(){
+			//create shortcut to file in startup
 			IWshRuntimeLibrary.WshShell wsh = new IWshRuntimeLibrary.WshShell();
 			IWshRuntimeLibrary.IWshShortcut shortcut = wsh.CreateShortcut(
-				Environment.GetFolderPath(Environment.SpecialFolder.Startup) + @"\program.lnk") as IWshRuntimeLibrary.IWshShortcut;
+				Environment.GetFolderPath(Environment.SpecialFolder.Startup) + @"\EyeCare.lnk") as IWshRuntimeLibrary.IWshShortcut;
 			shortcut.Arguments = "";
-			shortcut.TargetPath = Environment.CurrentDirectory + @"\program.exe";
+			shortcut.TargetPath = Environment.CurrentDirectory + @"\EyeCare.exe";
 			shortcut.WindowStyle = 1;
-			shortcut.Description = "program";
+			shortcut.Description = "EyeCare Shortcut";
 			shortcut.WorkingDirectory = Environment.CurrentDirectory + @"\";
-			//shortcut.IconLocation = "specify icon location";
+			shortcut.IconLocation = Path.Combine(Environment.CurrentDirectory, "/Resource/favicon.ico");
 			shortcut.Save();
+		}
+
+		private void RemoveRunAtStartUp(){
+			var startUpFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+			if (File.Exists(Path.Combine(startUpFolder, @"\EyeCare.lnk"))){
+				File.Delete(Path.Combine(startUpFolder, @"\EyeCare.lnk"));
+			}
 		}
 	}
 }

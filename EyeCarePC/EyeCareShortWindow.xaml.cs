@@ -16,6 +16,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Application = System.Windows.Application;
 
 namespace EyeCarePC {
 	/// <summary>
@@ -32,18 +33,24 @@ namespace EyeCarePC {
 		private SoundPlayer soundUpDown;
 		private SoundPlayer soundEnd;
 		private App.BreakType Breaktype { get; set; }
+		private bool IsMuted { get; set; }
 
-		public EyeCareShortWindow(App.BreakType breakType) {
+		public EyeCareShortWindow(App.BreakType breakType, bool mute) {
 			InitializeComponent();
 			Breaktype = breakType;
+			IsMuted = mute;
 			CloseBtn.Visibility = (Properties.Settings.Default.forceNoClose) ? Visibility.Hidden : Visibility.Visible;
+			if(Properties.Settings.Default.forceNoClose){
+				EyeWindow.Width = Screen.AllScreens[0].WorkingArea.Width;
+				EyeWindow.Height = Screen.AllScreens[0].WorkingArea.Height;
+			}
 			switch (Breaktype) {
 				case App.BreakType.SHORT:
 					LongBreakImage.Visibility = Visibility.Collapsed;
 					//Get Break Duration
 					CountDown = Properties.Settings.Default.shortBreakDuration;
 					//Audio Setup
-					if (Properties.Settings.Default.audios) {
+					if (Properties.Settings.Default.audios && !IsMuted) {
 						soundLeftRight = new SoundPlayer(Properties.Resources.eyes_left_right);
 						soundUpDown = new SoundPlayer(Properties.Resources.eyes_up_down);
 						soundEnd = new SoundPlayer(Properties.Resources.eyes_end_short);
@@ -57,7 +64,7 @@ namespace EyeCarePC {
 					//Get Break Duration
 					CountDown = Properties.Settings.Default.longBreakDuration;
 					//Audio Setup
-					if (Properties.Settings.Default.audios) {
+					if (Properties.Settings.Default.audios && !IsMuted) {
 						soundEnd = new SoundPlayer(Properties.Resources.eyes_end_long);
 						soundEnd.Load();
 					}
@@ -84,7 +91,8 @@ namespace EyeCarePC {
 			dt.Interval = interval;
 			dt.Tick += (_, a) => {
 				if (count-- == 0) {
-					soundEnd.Play();
+					if (soundEnd != null)
+						soundEnd.Play();
 					dt.Stop();
 					this.Close();
 				}	
@@ -102,7 +110,8 @@ namespace EyeCarePC {
 					case App.BreakType.SHORT:				
 						description.Text = "Move your eyes Left to Right";
 						LastMove = Movement.LEFT;
-						soundLeftRight.Play();
+						if (soundLeftRight != null)
+							soundLeftRight.Play();
 						Countdown((int)CountDown.TotalSeconds, TimeSpan.FromSeconds(1), cur => TimeLeft.Content = cur.ToString());
 						MoveEyesLefFromCenter();
 						break;
@@ -223,7 +232,8 @@ namespace EyeCarePC {
 					return;
 				}
 				if(MovementCount == 9) {
-					soundUpDown.Play();
+					if(soundUpDown != null)
+						soundUpDown.Play();
 					MoveEyesFromLeftToCenter();
 					LastMove = Movement.CENTER;
 					description.Text = "Move your eyes Up and Down";

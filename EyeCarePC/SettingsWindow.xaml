@@ -47,18 +47,20 @@
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 				<StackPanel Grid.Column="0">
-					<CheckBox x:Name="generalDisable" Content="Disable"/>
+					<CheckBox x:Name="GeneralDisable" Content="Disable"/>
 					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Disable all breaks until unchecked again."/>
-					<CheckBox x:Name="fullscreenDisable" Content="Disable while Full Screen"/>
+					<CheckBox x:Name="FullscreenDisable" Content="Disable while Full Screen"/>
 					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Disable while using fullscreen apps or games."/>
-					<CheckBox x:Name="forceBreaks" Content="Force Breaks"/>
+					<CheckBox x:Name="ForceBreaks" Content="Force Breaks"/>
 					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Disable closing or dismissing the break."/>
 				</StackPanel>
 				<StackPanel Grid.Column="1">
-					<CheckBox x:Name="playAudios" Content="Use Audios"/>
+					<CheckBox x:Name="PlayAudios" Content="Use Audios"/>
 					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Use audios for notifications and break guides."/>
 					<CheckBox x:Name="RunAtStart" Content="Run at Start"/>
 					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Run EyeCare on system Start."/>
+					<CheckBox x:Name="MultiMonitor" Content="Multi monitor"/>
+					<Label FontSize="12" Margin="40,0,0,0" FontStyle="Italic" Content="Show window on each monitor."/>
 				</StackPanel>
 			</Grid>
 			<Grid Margin="20,0,0,0">

@@ -130,5 +130,17 @@ namespace EyeCarePC.Properties {
                 this["runStartUp"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showOnAllMonitors {
+            get {
+                return ((bool)(this["showOnAllMonitors"]));
+            }
+            set {
+                this["showOnAllMonitors"] = value;
+            }
+        }
     }
 }
