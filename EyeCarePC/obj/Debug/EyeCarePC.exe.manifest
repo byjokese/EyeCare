@@ -4,7 +4,7 @@
   <description asmv2:iconFile="favicon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="EyeCarePC" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="EyeCarePC" version="1.0.0.0" publicKeyToken="A8CA602B67C12283" language="neutral" processorArchitecture="msil" />
     <commandLine file="EyeCarePC.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EyeCarePC.exe" size="2733488">
-      <assemblyIdentity name="EyeCarePC" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EyeCarePC.exe" size="2739120">
+      <assemblyIdentity name="EyeCarePC" version="1.0.0.0" publicKeyToken="A8CA602B67C12283" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>1+hVet06m+YfDH0/nf+kIf2306s7NtV/rhKIDaJEbn8=</dsig:DigestValue>
+        <dsig:DigestValue>MIbmxw62a4cQ2ZWCI8MW1rgAF5x2fY5rtt3pY0ySOmE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

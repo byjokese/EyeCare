@@ -29,6 +29,7 @@ namespace EyeCarePC {
 			InitializeComponent();
 			Breaktype = breakType;
 			IsMuted = mute;
+			this.WindowState = WindowState.Minimized;
 			CloseBtn.Visibility = (Properties.Settings.Default.forceNoClose) ? Visibility.Hidden : Visibility.Visible;
 			if (Properties.Settings.Default.forceNoClose) {
 				EyeWindow.Width = Screen.AllScreens[0].WorkingArea.Width;
@@ -58,6 +59,8 @@ namespace EyeCarePC {
 						soundEnd = new SoundPlayer(Properties.Resources.eyes_end_long);
 						soundEnd.Load();
 					}
+					break;
+				default:
 					break;
 			};
 			TimeLeft.Content = CountDown;
@@ -107,6 +110,8 @@ namespace EyeCarePC {
 					case App.BreakType.LONG:
 						description.Text = "Get up and relax for the rest of the break. Look out the window or take a small walk.";
 						Countdown((int)CountDown.TotalSeconds, TimeSpan.FromSeconds(1), cur => TimeLeft.Content = cur.ToString());
+						break;
+					default:
 						break;
 				};
 			});

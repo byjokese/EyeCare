@@ -19,7 +19,7 @@
 		</Style>
 		<Style TargetType="{x:Type TextBox}">
 			<Setter Property="Height" Value="20"/>
-			<Setter Property="Width" Value="50"/>
+			<Setter Property="Width" Value="45"/>
 			<Setter Property="VerticalAlignment" Value="Center"/>
 		</Style>
 	</Window.Resources>
@@ -71,10 +71,19 @@
 				<Grid.RowDefinitions>
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="auto"/>
+					<RowDefinition Height="7"/>
+					<RowDefinition Height="auto"/>
 				</Grid.RowDefinitions>
-				<Label FontSize="15" Grid.Column="0" Grid.Row="0" Content="Short break every:"/>
-				<Label FontSize="15" Grid.Column="0" Grid.Row="1" Content="Long break every:"/>
-				<DockPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left">
+				<Label Grid.Row="0" Grid.Column="0">Break Reminders</Label>
+				<DockPanel  Grid.Column="0" Grid.Row="1" >
+					<CheckBox x:Name="IsShortBreakEnabled" VerticalAlignment="Center" IsChecked="True"/>
+					<Label FontSize="15" Content="Short break every:"/>
+				</DockPanel>
+				<DockPanel  Grid.Column="0" Grid.Row="3">
+					<CheckBox x:Name="IsLongBreakEnabled" VerticalAlignment="Center" IsChecked="True"/>
+					<Label FontSize="15" Content="Long break every:"/>
+				</DockPanel>
+				<DockPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left">
 					<TextBox x:Name="ShortHours"/>
 					<Label FontSize="15" Content=":"/>
 					<TextBox x:Name="ShortMinutes"/>
@@ -82,12 +91,14 @@
 					<TextBox x:Name="ShortSeconds"/>
 					<Label FontSize="15" VerticalAlignment="Center" Content="for"/>
 					<TextBox x:Name="ShortDuration"/>
-					<ComboBox x:Name="ShortDurationUnits" Width="80" VerticalAlignment="Center" Margin="10,0,0,0">
+					<ComboBox x:Name="ShortDurationUnits" Width="70" VerticalAlignment="Center" Margin="10,0,0,0">
 						<ComboBoxItem IsSelected="True" Content="Seconds"/>
 						<ComboBoxItem Content="Minutes"/>
 					</ComboBox>
+					<CheckBox x:Name="IsShortOnlyAudio" VerticalAlignment="Center">Only Audio</CheckBox>
 				</DockPanel>
-				<DockPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+				<Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="14,2,4,2"/>
+				<DockPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center">
 					<TextBox x:Name="LongHours"/>
 					<Label FontSize="15" Content=":"/>
 					<TextBox x:Name="LongMinutes"/>
@@ -99,11 +110,12 @@
 							<Properties:Settings/>
 						</TextBox.DataContext>
 					</TextBox>
-					<ComboBox x:Name="LongDurationUnits" Width="80" VerticalAlignment="Center" Margin="10,0,0,0">
+					<ComboBox x:Name="LongDurationUnits" Width="70" VerticalAlignment="Center" Margin="10,0,0,0">
 						<ComboBoxItem Content="Seconds"/>
 						<ComboBoxItem IsSelected="True" Content="Minutes"/>
 						<ComboBoxItem Content="Hours"/>
 					</ComboBox>
+					<CheckBox x:Name="IsLongOnlyAudio" VerticalAlignment="Center">Only Audio</CheckBox>
 				</DockPanel>
 			</Grid>
 			<Label FontSize="13" FontStyle="Italic" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center" HorizontalAlignment="Center">More info at https://github.com/byjokese/EyeCare</Label>

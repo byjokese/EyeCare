@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="EyeCarePC.exe.manifest" size="6415">
+    <dependentAssembly dependencyType="install" codebase="EyeCarePC.exe.manifest" size="6483">
       <assemblyIdentity name="EyeCarePC.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Q7FsrIJGTnS8L29xG9nqUtoxNMhhMogSuE5oLtfvwKc=</dsig:DigestValue>
+        <dsig:DigestValue>5hfW3sWO+G6x3fEqGEAsHnURb7C+LPYrUvnbzkbvtZo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
