@@ -9,6 +9,8 @@
 	Take take of your eyes while using a Computer
 </p>
 
+<h3 align="center"> **Work In Progress** </h3>
+
 **EyeCare** is an Open-Source, free application for windows users to help protect your eyes during computer time.
 
 EyeCare uses reminders to guide you to relax your eyes after periods of computer use. Eyecare has two types of remindiers, that are totaly customizable for user comodity.
