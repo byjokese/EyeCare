@@ -95,7 +95,7 @@
 						<ComboBoxItem IsSelected="True" Content="Seconds"/>
 						<ComboBoxItem Content="Minutes"/>
 					</ComboBox>
-					<CheckBox x:Name="IsShortOnlyAudio" VerticalAlignment="Center">Only Audio</CheckBox>
+					<CheckBox x:Name="IsShortOnlyAudio" VerticalAlignment="Center" IsEnabled="False">Only Audio</CheckBox>
 				</DockPanel>
 				<Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="14,2,4,2"/>
 				<DockPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -115,7 +115,7 @@
 						<ComboBoxItem IsSelected="True" Content="Minutes"/>
 						<ComboBoxItem Content="Hours"/>
 					</ComboBox>
-					<CheckBox x:Name="IsLongOnlyAudio" VerticalAlignment="Center">Only Audio</CheckBox>
+					<CheckBox x:Name="IsLongOnlyAudio" VerticalAlignment="Center" IsEnabled="False">Only Audio</CheckBox>
 				</DockPanel>
 			</Grid>
 			<Label FontSize="13" FontStyle="Italic" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center" HorizontalAlignment="Center">More info at https://github.com/byjokese/EyeCare</Label>

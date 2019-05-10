@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace EyeCarePC {
 	/// <summary>
@@ -23,17 +11,25 @@ namespace EyeCarePC {
 		public string NotificationDescription { get; set; }
 		public Notification() {
 			InitializeComponent();
-			this.DataContext = this;
-			this.WindowStartupLocation = WindowStartupLocation.Manual;
-			this.Top = SystemParameters.WorkArea.Right - this.Height;
-			this.Left = SystemParameters.WorkArea.Bottom - this.Width;
-			this.Top = 1500;
-			this.Left = 1200;
+			DataContext = this;
+			WindowStartupLocation = WindowStartupLocation.Manual;
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e) {
-			//this.Top = 1500;
-			//this.Left = 1200;
+			Left = System.Windows.SystemParameters.WorkArea.Width - Width - 30;
+			Top = System.Windows.SystemParameters.WorkArea.Height - Height - 30;
+			System.Media.SystemSounds.Beep.Play();
+			//Close Timmer
+			DispatcherTimer closeTimmer = new DispatcherTimer {
+				Interval = new TimeSpan(0, 0, 6)
+			};
+			closeTimmer.Tick += (_, a) => {
+				Close();
+			};
+		}
+
+		private void CloseBtn_Click(object sender, RoutedEventArgs e) {
+			Close();
 		}
 	}
 }

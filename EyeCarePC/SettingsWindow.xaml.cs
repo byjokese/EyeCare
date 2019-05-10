@@ -18,6 +18,8 @@ namespace EyeCarePC {
 			PlayAudios.IsChecked = Properties.Settings.Default.audios;
 			RunAtStart.IsChecked = Properties.Settings.Default.runStartUp;
 			MultiMonitor.IsChecked = Properties.Settings.Default.showOnAllMonitors;
+			IsShortBreakEnabled.IsChecked = !Properties.Settings.Default.shortBreakDisabled;
+			IsLongBreakEnabled.IsChecked = !Properties.Settings.Default.longBreakDisabled;
 
 			ShortHours.Text = Properties.Settings.Default.shortBreaksInterval.Hours.ToString();
 			ShortMinutes.Text = Properties.Settings.Default.shortBreaksInterval.Minutes.ToString();
@@ -41,10 +43,6 @@ namespace EyeCarePC {
 			}
 		}
 
-		private void Grid_Loaded(object sender, RoutedEventArgs e) {
-
-		}
-
 		protected override void OnClosing(System.ComponentModel.CancelEventArgs e) {
 			InputError.Content = ""; //Clear Error messages as no save has been done in wrong input.		
 		}
@@ -57,11 +55,15 @@ namespace EyeCarePC {
 			Properties.Settings.Default.audios = (bool)PlayAudios.IsChecked;
 			Properties.Settings.Default.runStartUp = (bool)RunAtStart.IsChecked;
 			Properties.Settings.Default.showOnAllMonitors = (bool)MultiMonitor.IsChecked;
+			Properties.Settings.Default.shortBreakDisabled = !(bool)IsShortBreakEnabled.IsChecked;
+			Properties.Settings.Default.longBreakDisabled = !(bool)IsLongBreakEnabled.IsChecked;
 			//Update Run on Start preference
-			if ((bool)RunAtStart.IsChecked)
+			if ((bool)RunAtStart.IsChecked){
 				SetupRunAtStartUp();
-			else
+			}
+			else{
 				RemoveRunAtStartUp();
+			}
 			//Short break interval
 			Int32 shortHours, shortMinutes, shortSeconds;
 			if (!Int32.TryParse(ShortHours.Text, out shortHours)) {
@@ -87,13 +89,11 @@ namespace EyeCarePC {
 				InputError.Content = "Check Sort break Duration, must be a valid number";
 				return;
 			}
-			switch (ShortDurationUnits.SelectedIndex) {
-				case 0:
-					shortDurationSpan = new TimeSpan(0, 0, shortDurationInt);
-					break;
-				case 1:
-					shortDurationSpan = new TimeSpan(0, shortDurationInt, 0);
-					break;
+			if (ShortDurationUnits.SelectedIndex == 0) {
+				shortDurationSpan = new TimeSpan(0, 0, shortDurationInt);
+			}
+			else if(ShortDurationUnits.SelectedIndex == 1) {
+				shortDurationSpan = new TimeSpan(0, shortDurationInt, 0);
 			}
 			Properties.Settings.Default.shortBreakDuration = shortDurationSpan;
 			//Long break interval
@@ -138,14 +138,17 @@ namespace EyeCarePC {
 		}
 
 		private void RestoreButton_Click(object sender, RoutedEventArgs e) {
-			InputError.Content = "";//Clear previous Error Messeges
-									//Set the UI to default values
+			//Clear previous Error Messeges
+			InputError.Content = "";
+			//Set the UI to default values
 			GeneralDisable.IsChecked = false;
 			FullscreenDisable.IsChecked = true;
 			ForceBreaks.IsChecked = false;
-			PlayAudios.IsChecked = false;
+			PlayAudios.IsChecked = true;
 			RunAtStart.IsChecked = false;
 			MultiMonitor.IsChecked = true;
+			IsShortBreakEnabled.IsChecked = true;
+			IsLongBreakEnabled.IsChecked = true;
 			ShortHours.Text = "0";
 			ShortMinutes.Text = "40";
 			ShortSeconds.Text = "0";
@@ -161,7 +164,7 @@ namespace EyeCarePC {
 			Properties.Settings.Default.Save(); //Save All Settings
 		}
 
-		private void SetupRunAtStartUp() {
+		private static void SetupRunAtStartUp() {
 			//create shortcut to file in startup
 			IWshRuntimeLibrary.WshShell wsh = new IWshRuntimeLibrary.WshShell();
 			IWshRuntimeLibrary.IWshShortcut shortcut = wsh.CreateShortcut(
@@ -175,7 +178,7 @@ namespace EyeCarePC {
 			shortcut.Save();
 		}
 
-		private void RemoveRunAtStartUp() {
+		private static void RemoveRunAtStartUp() {
 			var startUpFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
 			if (File.Exists(Path.Combine(startUpFolder, @"\EyeCare.lnk"))) {
 				File.Delete(Path.Combine(startUpFolder, @"\EyeCare.lnk"));

@@ -19,9 +19,9 @@ namespace EyeCarePC {
 		private int MovementCount { get; set; }
 		private TimeSpan CountDown { get; set; }
 		private Thread animationThreath;
-		private SoundPlayer soundLeftRight;
-		private SoundPlayer soundUpDown;
-		private SoundPlayer soundEnd;
+		private readonly SoundPlayer soundLeftRight;
+		private readonly SoundPlayer soundUpDown;
+		private readonly SoundPlayer soundEnd;
 		private App.BreakType Breaktype { get; set; }
 		private bool IsMuted { get; set; }
 
@@ -61,6 +61,7 @@ namespace EyeCarePC {
 					}
 					break;
 				default:
+					Close();
 					break;
 			};
 			TimeLeft.Content = CountDown;
@@ -69,9 +70,7 @@ namespace EyeCarePC {
 			CenterEyes();
 		}
 
-		private void CloseButton_Click(object sender, RoutedEventArgs e) {
-			this.Close();
-		}
+		private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
 
 		private void Window_Loaded(object sender, RoutedEventArgs e) {
 			animationThreath = new Thread(StartAnimation);
@@ -79,17 +78,19 @@ namespace EyeCarePC {
 		}
 
 		private void Countdown(int count, TimeSpan interval, Action<int> ts) {
-			//Thread.Sleep(2000);	
-			var dt = new System.Windows.Threading.DispatcherTimer();
-			dt.Interval = interval;
+			var dt = new System.Windows.Threading.DispatcherTimer {
+				Interval = interval
+			};
 			dt.Tick += (_, a) => {
 				if (count-- == 0) {
-					if (soundEnd != null)
+					if (soundEnd != null){
 						soundEnd.Play();
+					}
 					dt.Stop();
 					this.Close();
-				} else
+				} else{
 					ts(count);
+				}
 			};
 			ts(count);
 			dt.Start();
@@ -112,6 +113,7 @@ namespace EyeCarePC {
 						Countdown((int)CountDown.TotalSeconds, TimeSpan.FromSeconds(1), cur => TimeLeft.Content = cur.ToString());
 						break;
 					default:
+						Close();
 						break;
 				};
 			});
@@ -253,7 +255,7 @@ namespace EyeCarePC {
 			});
 		}
 
-		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+		private static void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
 			if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.F4)) {
 				e.Cancel = true;
 			}

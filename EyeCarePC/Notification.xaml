@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EyeCarePC"
         mc:Ignorable="d"
-        Title="Notification" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStyle="None" WindowStartupLocation="Manual" AllowsTransparency="True" MinWidth="250" MinHeight="100" MaxWidth="350" ShowInTaskbar="False" Topmost="True" OpacityMask="White" Loaded="Window_Loaded">
+        Title="Notification" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStyle="None" WindowStartupLocation="Manual" AllowsTransparency="True" MinWidth="250" MinHeight="100" MaxWidth="350" ShowInTaskbar="False" Topmost="True" Loaded="Window_Loaded" Background="Transparent">
 	<Window.Resources>
 		<Style TargetType="{x:Type Label}">
 			<Setter Property="Foreground" Value="White"/>
@@ -37,7 +37,7 @@
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="10"/>
 			</Grid.ColumnDefinitions>
-			<Button x:Name="CloseBtn" Grid.Column="1" Grid.Row="0" FontSize="7" VerticalAlignment="Top">X</Button>
+			<Button x:Name="CloseBtn" Grid.Column="1" Grid.Row="0" FontSize="7" VerticalAlignment="Top" Click="CloseBtn_Click">X</Button>
 			<StackPanel  Margin="10,0,0,0">
 				<Label x:Name="title" FontSize="20" Content="{Binding NotificationTitle}">
 				</Label>

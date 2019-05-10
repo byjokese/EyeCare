@@ -37,7 +37,7 @@ namespace EyeCarePC.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("00:40:00")]
+        [global::System.Configuration.DefaultSettingValueAttribute("00:45:00")]
         public global::System.TimeSpan shortBreaksInterval {
             get {
                 return ((global::System.TimeSpan)(this["shortBreaksInterval"]));
@@ -109,7 +109,7 @@ namespace EyeCarePC.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool audios {
             get {
                 return ((bool)(this["audios"]));
@@ -140,6 +140,30 @@ namespace EyeCarePC.Properties {
             }
             set {
                 this["showOnAllMonitors"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool shortBreakDisabled {
+            get {
+                return ((bool)(this["shortBreakDisabled"]));
+            }
+            set {
+                this["shortBreakDisabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool longBreakDisabled {
+            get {
+                return ((bool)(this["longBreakDisabled"]));
+            }
+            set {
+                this["longBreakDisabled"] = value;
             }
         }
     }

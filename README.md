@@ -1,4 +1,4 @@
-<p style="text-align: center;"><img src="resources/logo.png"></p>
+<p align="center"><img src="resources/logo.png"></p>
 <h1 align="center"> EyeCare for Windows </h1>
 
 <p align="center">

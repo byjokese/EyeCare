@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Media;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Forms.ContextMenu;
 using MenuItem = System.Windows.Forms.MenuItem;
@@ -35,27 +34,21 @@ namespace EyeCarePC {
 		}
 		public enum BreakType { SHORT, LONG };
 
-		private IntPtr desktopHandle;
-		private IntPtr shellHandle;
+		private readonly IntPtr desktopHandle;
+		private readonly IntPtr shellHandle;
 
 		public NotifyIcon NotifyIcon { get; set; }
 		private SettingsWindow settingsWindow;
 		private EyeCareWindow eyeCareWindow;
-		private List<EyeCareWindow> eyeCareWindows;
-		private DispatcherTimer shortEyeCareWindowTimmer;
-		private DispatcherTimer longEyeCareWindowTimmer;
-		private SoundPlayer soundPlayer;
+		private readonly List<EyeCareWindow> eyeCareWindows;
+		private readonly DispatcherTimer shortEyeCareWindowTimmer;
+		private readonly DispatcherTimer longEyeCareWindowTimmer;
+		private readonly SoundPlayer soundPlayer;
 
 		public App() {
 			//Get the handles for Shell and the Desktop as they wont change unless someting nasting comes from Shell.
 			desktopHandle = GetDesktopWindow();
 			shellHandle = GetShellWindow();
-
-			Notification notification = new EyeCarePC.Notification { 
-				NotificationTitle = "TEST",
-				NotificationDescription = "This is an Example Notification"
-			};
-			notification.Show();
 
 			eyeCareWindows = new List<EyeCareWindow>();
 			settingsWindow = new SettingsWindow();
@@ -98,34 +91,39 @@ namespace EyeCarePC {
 			#region Timmers Setup
 			//Short Brake
 			shortEyeCareWindowTimmer = new DispatcherTimer {
-				Interval = new TimeSpan(0, 0, 10) //EyeCarePC.Properties.Settings.Default.shortBreaksInterval;//new TimeSpan(0, 0, 30);
+				// For Testing: new TimeSpan(0, 0, 30)
+				Interval = EyeCarePC.Properties.Settings.Default.shortBreaksInterval
 			};
 			shortEyeCareWindowTimmer.Tick += (_, a) => {
-				if (!(EyeCarePC.Properties.Settings.Default.disabled || IsUserOnFullScreenMode() || IsEyeCareAlreadyOpen())) {
+				if (!(EyeCarePC.Properties.Settings.Default.disabled || EyeCarePC.Properties.Settings.Default.shortBreakDisabled || IsUserOnFullScreenMode() || IsEyeCareAlreadyOpen())) {
 					PrepareAndShowWindows(BreakType.SHORT);
-					//CreateToast();
-				} else {
-					//Toast notification??
-				}
+				} /*else {
+					SendToastNotification(BreakType.SHORT);
+				}*/
 			};
 			//Long Brake
 			longEyeCareWindowTimmer = new DispatcherTimer {
 				Interval = EyeCarePC.Properties.Settings.Default.longBreaksInterval//new TimeSpan(0, 1, 0);
 			};
 			longEyeCareWindowTimmer.Tick += (_, a) => {
-				if (!(EyeCarePC.Properties.Settings.Default.disabled || IsUserOnFullScreenMode() || IsEyeCareAlreadyOpen())) {
-					if (EyeCarePC.Properties.Settings.Default.audios) {
-						PrepareAndShowWindows(BreakType.LONG);
-					}
-					eyeCareWindow.Show();
-				} else {
-					//Toast notification??
-				}
+				if (!(EyeCarePC.Properties.Settings.Default.disabled || EyeCarePC.Properties.Settings.Default.longBreakDisabled || IsUserOnFullScreenMode() || IsEyeCareAlreadyOpen())) {
+					PrepareAndShowWindows(BreakType.LONG);
+				}/* else {
+					SendToastNotification(BreakType.LONG);
+				}*/
 			};
 			//Start All Timmers
 			shortEyeCareWindowTimmer.Start();
 			longEyeCareWindowTimmer.Start();
 			#endregion
+		}
+
+		private static void SendToastNotification(BreakType breakType) {
+			Notification notification = new EyeCarePC.Notification {
+				NotificationTitle = "Break Time",
+				NotificationDescription = "It's time for a " + breakType.ToString().ToLower(CultureInfo.InvariantCulture) + " break."
+			};
+			notification.Show();
 		}
 
 		private void PrepareAndShowWindows(BreakType breakType) {
@@ -143,7 +141,7 @@ namespace EyeCarePC {
 					eyeCareWindows.Add(eyeCareWindow);
 					eyeCareWindow.Show();
 					if (EyeCarePC.Properties.Settings.Default.audios) {
-						PlayStartAudio(BreakType.SHORT);
+						PlayStartAudio(breakType);
 					}
 					//With Multimonitor disabed, skip the rest of the screens
 					if (!EyeCarePC.Properties.Settings.Default.showOnAllMonitors)
@@ -185,15 +183,10 @@ namespace EyeCarePC {
 			return (eyeCareWindow.IsActive) ? true : false;
 		}
 		private void PlayStartAudio(BreakType breakType) {
-			switch (breakType) {
-				case BreakType.SHORT:
-					soundPlayer.Stream = EyeCarePC.Properties.Resources.eyes_start;
-					break;
-				case BreakType.LONG:
-					soundPlayer.Stream = EyeCarePC.Properties.Resources.eyes_start_long; //TODO Change audio to long break
-					break;
-				default:
-					break;
+			if (breakType == BreakType.SHORT) {
+				soundPlayer.Stream = EyeCarePC.Properties.Resources.eyes_start;
+			}else{
+				soundPlayer.Stream = EyeCarePC.Properties.Resources.eyes_start_long;
 			}
 			soundPlayer.Load();
 			if (soundPlayer.IsLoadCompleted) {
